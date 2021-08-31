@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import * as serviceWorker from "./serviceWorker";
+
 import "./index.css";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import App from "./App";
@@ -14,10 +14,9 @@ const routing = (
       <Switch>
         <Route exact path="/" component={App} />
       </Switch>
+      <Footer/>
     </React.StrictMode>
   </Router>
 );
 
 ReactDOM.render(routing, document.getElementById("root"));
-
-serviceWorker.unregister();
