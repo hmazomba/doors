@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const baseURL = 'http://127.0.0.1:8000/api/';
+const baseURL = 'http://localhost:8000/api/';
 
 const axiosInstance = axios.create({
 	baseURL: baseURL,
 	timeout: 5000,
 	headers: {
 		Authorization: localStorage.getItem('access_token')
-			? 'JWT ' + localStorage.getItem('access_token')
+			? 'Bearer' + localStorage.getItem('access_token')
 			: null,
 		'Content-Type': 'application/json',
 		accept: 'application/json',
@@ -20,7 +20,7 @@ axiosInstance.interceptors.response.use(
 	},
 	async function (error) {
 		const originalRequest = error.config;
-        
+
 		if (typeof error.response === 'undefined') {
 			alert(
 				'A server/network error occurred. ' +

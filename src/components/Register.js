@@ -66,9 +66,7 @@ export default function SignUp() {
 				history.push('/login');
 				console.log(res);
 				console.log(res.data);
-			}).catch((error)=> {
-                window.alert(`Error: ${error}`)
-            });
+			});
 	};
 
 	const classes = useStyles();

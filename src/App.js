@@ -1,32 +1,28 @@
-import React, {useEffect, useState} from 'react';
-import './App.css'
-import Posts from './components/Posts'
-import PostLoadingComponent from './components/PostLoading'
-import ExampleConnection from './components/ExampleConnection';
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import Posts from './components/Posts';
+import PostLoadingComponent from './components/PostLoading';
+import axiosInstance from './axios';
 
-function App(){
-  const PostLoading = PostLoadingComponent(Posts);
-  const [appState, setAppState] = useState({
-    loading: false,
-    posts: null,
-  });
-  useEffect(()=> {
-    setAppState({loading: true});
-    const apiUrl = `http://localhost:8000/api/`
-    fetch(apiUrl)
-      .then((data) => data.json())
-      .then((posts) => {
-        setAppState({loading: false, posts: posts});
-      })
-    console.log('Posts', appState.posts)  
-  }, [setAppState])
+function App() {
+	const PostLoading = PostLoadingComponent(Posts);
+	const [appState, setAppState] = useState({
+		loading: true,
+		posts: null,
+	});
 
-  return (
-    <div className="App">
-      <h1>Latest Posts</h1>
-        <PostLoading  isLoading={appState.loading} posts={appState.posts} />      
-    </div>
-  )
+	useEffect(() => {
+		axiosInstance.get().then((res) => {
+			const allPosts = res.data;
+			setAppState({ loading: false, posts: allPosts });
+			console.log(res.data);
+		});
+	}, [setAppState]);
+	return (
+		<div className="App">
+			<h1>Latest Posts</h1>
+			<PostLoading isLoading={appState.loading} posts={appState.posts} />
+		</div>
+	);
 }
-
 export default App;
